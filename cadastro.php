@@ -20,6 +20,18 @@
             Preencha as informações abaixo e clique no botão
             cadastrar para criar seu cadastro.
         </p>
+        <?php   
+        if (!empty($_SESSION['erro'])) {
+
+            echo $_SESSION['erro'];
+
+            unset($_SESSION['erro']);
+
+        }
+
+        
+        
+        ?>
         <form action="bd.php" method="post">
             <div class="row">
                 <div class="col-md-6">
