@@ -1,58 +1,92 @@
+
 <?php
 
+ 
 
-if ($_POST['email']== $_POST['emailconf'] AND $_POST['senha']== $_POST['senhaconf']) {
-    echo "Usuario confirmado";
+print_r($_POST);
 
+ 
 
-$pdo = new PDO('mysql:host=localhost;dbname=aulasphp','root','' );
+if ($_POST['email'] == $_POST['emailconf'] AND $_POST['senha'] == $_POST['senhaconf']) {
 
-$sql = $pdo->prepare("INSERT INTO 'usuario' VALUES (null,?,?,?,?,?,?,?,?,?,?,?,?) ");
+   /* CONEXÃO COM O BANCO DE DADOS */
 
-$sql->execute(array($_POST['nome'],
-                    $_POST['sobrenome'],
-                    $_POST['end'],
-                    $_POST['num'],
-                    $_POST['cidade'],
-                    $_POST['estado'],
-                    $_POST['sexo'],
-                    $_POST['RG'],
-                    $_POST['CPF'],
-                    $_POST['Data de nascimento'],
-                    $_POST['email'],
-                   sha1($_POST['senha']),
+    $pdo = new PDO('mysql:host=localhost;dbname=aulasphp','root','');
 
+ 
 
+    /* PREPARAÇÃO PARA REALIZAR UM COMANDO SQL NO BANCO DE DADOS */
 
+    $sql = $pdo->prepare("INSERT INTO `usuarios` VALUES (null,?,?,?,?,?,?,?,?,?,?,?,?)");
 
+ 
 
+    /* ENVIO DOS DADOS E GRAVAÇÃO NO BANCO DE DADOS*/
 
+    $sql->execute(array($_POST['nome'],
 
+                        $_POST['sobrenome'],
 
+                        $_POST['end'],
+
+                        $_POST['num'],
+
+                        $_POST['cidade'],
+
+                        $_POST['estado'],
+
+                        $_POST['sexo'],
+
+                        $_POST['RG'],
+
+                        $_POST['CPF'],
+
+                        $_POST['Data_de_nascimento'],
+
+                        $_POST['email'],
+
+                        sha1($_POST['senha']),
 
 ));
 
-echo "dados gravados "
-echo "<meta http-equiv="refresh" content='3;'URL='index.php'/>";
+ 
+
+//echo "Dados gravados corretamente!";
+
+session_start();
+
+$_SESSION['erro'] = "<div class='alert alert-success' role='alert'> Cadastro realizado com sucesso! </div>";
+
+ 
+
+echo "<meta http-equiv='refresh' content='0; URL=index.php'/>";
+
+ 
 
 } else {
-    echo "usuario esta difirente";
+
+    echo "Usuário e senha diferentes!!";
+
+    session_start();
+
+    $_SESSION['erro'] = "<div class='alert alert-danger' role='alert'> Cadastro incorreto! </div>";
+
 }
 
+ 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
